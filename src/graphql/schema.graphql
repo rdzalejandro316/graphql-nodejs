@@ -1,0 +1,72 @@
+type Query {
+  hello: String!
+  getPerson(name: String!, age: Int): String
+  getBoolean: Boolean
+  getFloat: Float
+  #products
+  getProduct(id: ID!): Product
+  getProducts: [Product!]!
+  getCategory(id: ID!): Category
+}
+
+type Mutation {
+  login(email: String, password: String): AuthResponse
+  addProduct(inputProduct: CreateProductInput): Product!
+  updateProduct(id: ID, inputProduct: UpdateProductInput!): Product!
+  deleteProduct(id: ID!): ID
+  addCategory(inputCategory: CreateCategoryInput): Category
+}
+
+input CreateProductInput {
+  name: String!
+  price: Int
+  description: String!
+  image: String
+  categoryId: ID!
+}
+
+input UpdateProductInput {
+  name: String
+  price: Int
+  description: String
+  image: String
+  categoryId: ID
+}
+
+type Product {
+  id: ID!
+  name: String!
+  price: Float
+  description: String
+  image: String
+  createAt: String
+  categoryId: ID!
+  category: Category!
+}
+
+type Category {
+  id: ID!
+  name: String!
+  image: String!
+  product: [Product]
+}
+
+type AuthResponse {
+  access_token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  email: String!
+  role: String!
+  createdAt: String!
+}
+
+input CreateCategoryInput {
+  name: CategoryNameType!
+  image: String!
+}
+
+# Debemos importarlo de la siguiente manera
+scalar CategoryNameType
